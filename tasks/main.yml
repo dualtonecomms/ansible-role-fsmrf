@@ -170,7 +170,7 @@
 
 - name: check out drachtio freeswitch modules
   git: 
-    repo: https://github.com/drachtio/drachtio-freeswitch-modules.git
+    repo: https://github.com/jambonz/freeswitch-modules.git
     dest: /usr/local/src/drachtio-freeswitch-modules
     version: "{{drachtio_modules_version}}"
     depth: 50
@@ -241,17 +241,6 @@
     - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_audio_fork/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
     - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_google_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
     - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_google_tts/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_dialogflow/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_aws_lex/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_aws_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_azure_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_cobalt_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_deepgram_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_nuance_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_soniox_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_ibm_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_nvidia_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_jambonz_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
 
 - name: check out grpc
   git: 

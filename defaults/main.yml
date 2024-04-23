@@ -2,7 +2,7 @@
 # path to the FreeSwitch source directory
 freeswitch_sources_path: /usr/local/src/freeswitch/
 
-drachtio_modules_version: v0.8.2
+drachtio_modules_version: HEAD
 
 spandsp_version: 0d2e6ac
 sofia_version: master
@@ -35,10 +35,10 @@ freeswitch_configure_command: configure --with-lws=yes --with-extra=yes
 freeswitch_log_conf_template: ../templates/logfile.conf.xml
 
 # set to true if you want to build mod_google_tts, mod_google_transcribe, mod_dialogflow, and mod_aws_transcribe
-build_with_extra: false
+build_with_extra: true
 
-grpc_version: v1.57.0
-googleapis_version: 29374574304f3356e64423acc9ad059fe43f09b5
+grpc_version: v1.62.2
+googleapis_version: HEAD
 
 aws_sdk_version: 1.8.129
 lws_version: v4.3.2
