@@ -240,7 +240,7 @@
   loop:
     - {src: /usr/local/src/drachtio-freeswitch-modules/mod_audio_fork/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
     - {src: /usr/local/src/drachtio-freeswitch-modules/mod_google_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/mod_google_tts/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
+    # - {src: /usr/local/src/drachtio-freeswitch-modules/mod_google_tts/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
 
 - name: check out grpc
   git: 
