@@ -168,7 +168,7 @@
     accept_hostkey: yes
     force: yes
 
-- name: check out drachtio freeswitch modules
+- name: check out jambonz freeswitch modules
   git: 
     repo: https://github.com/jambonz/freeswitch-modules.git
     dest: /usr/local/src/drachtio-freeswitch-modules
@@ -238,9 +238,9 @@
 - name: copy modules into place
   shell: cp -r -n "{{ item.src }}" "{{ item.dest }}"  # noqa
   loop:
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_audio_fork/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_google_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
-    - {src: /usr/local/src/drachtio-freeswitch-modules/modules/mod_google_tts/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
+    - {src: /usr/local/src/drachtio-freeswitch-modules/mod_audio_fork/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
+    - {src: /usr/local/src/drachtio-freeswitch-modules/mod_google_transcribe/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
+    # - {src: /usr/local/src/drachtio-freeswitch-modules/mod_google_tts/, dest: "{{freeswitch_sources_path}}/src/mod/applications/"}
 
 - name: check out grpc
   git: 
