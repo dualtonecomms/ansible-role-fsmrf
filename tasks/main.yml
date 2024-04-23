@@ -11,7 +11,7 @@
         'libtool', 'build-essential', 'pkg-config', 'ca-certificates', 'libssl-dev', 'lsb-release', 'systemd-coredump', 'liblz4-tool', 'libswresample-dev',
         'libz-dev', 'libjpeg-dev', 'libsqlite3-dev', 'libcurl4-openssl-dev', 'libpcre3-dev', 'libswscale-dev', 'php-cli', 'libre2-dev',
         'libspeex-dev', 'libspeexdsp-dev', 'libedit-dev', 'libtiff-dev', 'yasm', 'haveged', 'libldns-dev', 'uuid-dev', 'libsndfile1-dev',
-        'libopus-dev', 'libopusfile-dev', 'libsndfile-dev', 'libshout3-dev', 'libmpg123-dev', 'libmp3lame-dev', 'htop']
+        'libopus-dev', 'libopusfile-dev', 'libsndfile-dev', 'libshout3-dev', 'libmpg123-dev', 'libmp3lame-dev', 'htop', 'libpq-dev', 'php-dev']
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: install libtool-bin

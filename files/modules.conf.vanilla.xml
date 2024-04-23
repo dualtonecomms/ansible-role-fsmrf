@@ -110,7 +110,7 @@
       <load module="mod_spandsp"/>
       <!-- <load module="mod_g723_1"/>  -->
       <load module="mod_g729"/>
-      <load module="mod_amr"/>
+      <!-- <load module="mod_amr"/> -->
       <!--<load module="mod_ilbc"/>-->
       <!--<load module="mod_h26x"/>-->
       <!-- <load module="mod_b64"/> -->
@@ -140,7 +140,7 @@
       <!-- <load module="mod_perl"/> -->
       <!-- <load module="mod_python"/> -->
       <!-- <load module="mod_java"/> -->
-      <load module="mod_lua"/>
+      <!-- <load module="mod_lua"/> -->
 
       <!-- ASR /TTS -->
       <!-- <load module="mod_flite"/> -->
