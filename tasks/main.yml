@@ -168,7 +168,7 @@
     accept_hostkey: yes
     force: yes
 
-- name: check out drachtio freeswitch modules
+- name: check out jambonz freeswitch modules
   git: 
     repo: https://github.com/jambonz/freeswitch-modules.git
     dest: /usr/local/src/drachtio-freeswitch-modules
