@@ -3,10 +3,10 @@
 
 # Must change all of the below together
 # For a release, set revision for that tagged release as well and uncomment
-AC_INIT([freeswitch],[1.10.10-release],[bugs@freeswitch.org])
+AC_INIT([freeswitch], [1.10.11-release], bugs@freeswitch.org)
 AC_SUBST(SWITCH_VERSION_MAJOR, [1])
 AC_SUBST(SWITCH_VERSION_MINOR, [10])
-AC_SUBST(SWITCH_VERSION_MICRO, [10-release])
+AC_SUBST(SWITCH_VERSION_MICRO, [11-release])
 AC_SUBST(SWITCH_VERSION_REVISION, [])
 AC_SUBST(SWITCH_VERSION_REVISION_HUMAN, [])
 
@@ -16,9 +16,9 @@ AC_CONFIG_AUX_DIR(build/config)
 AM_INIT_AUTOMAKE
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_SRCDIR([src/switch.c])
-AC_CONFIG_HEADERS([src/include/switch_private.h])
-AC_CONFIG_HEADERS([libs/esl/src/include/esl_config_auto.h])
-AC_CONFIG_HEADERS([libs/xmlrpc-c/xmlrpc_amconfig.h])
+AC_CONFIG_HEADER([src/include/switch_private.h])
+AC_CONFIG_HEADER([libs/esl/src/include/esl_config_auto.h])
+AC_CONFIG_HEADER([libs/xmlrpc-c/xmlrpc_amconfig.h])
 
 AC_CANONICAL_HOST
 
@@ -36,7 +36,7 @@ AC_SUBST(switch_builddir)
 
 #  Enable 64 bit build
 AC_ARG_ENABLE(64,
-[AS_HELP_STRING([--enable-64],[build with 64 bit support])],[enable_64="$enable_64"],[enable_64="no"])
+[AC_HELP_STRING([--enable-64],[build with 64 bit support])],[enable_64="$enable_64"],[enable_64="no"])
 
 if test "${enable_64}" = "yes"; then
    case "$host" in
@@ -223,7 +223,7 @@ AC_ARG_WITH([pkgconfigdir],
 AC_SUBST([pkgconfigdir])
 
 #Set default language
-AC_LANG([C])
+AC_LANG_C
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
@@ -243,7 +243,7 @@ AC_PROG_AWK
 AC_PROG_MAKE_SET
 AC_PROG_INSTALL
 
-#override some default libtool behavior and invoke LT_INIT (see http://lists.gnu.org/archive/html/libtool/2007-03/msg00000.html)
+#override some default libtool behavior and invoke AC_PROG_LIBTOOL (see http://lists.gnu.org/archive/html/libtool/2007-03/msg00000.html)
 m4_defun([_LT_AC_LANG_F77_CONFIG], [:])
 m4_defun([_LT_AC_LANG_GCJ_CONFIG], [:])
 m4_defun([_LT_AC_LANG_RC_CONFIG], [:])
@@ -295,7 +295,7 @@ fi
 
 #  Optimize
 AC_ARG_ENABLE(optimization,
-[AS_HELP_STRING([--enable-optimization],[Set if you want us to add max optimising compiler flags])],[enable_optimizer="$enableval"],[enable_optimizer="no"])
+[AC_HELP_STRING([--enable-optimization],[Set if you want us to add max optimising compiler flags])],[enable_optimizer="$enableval"],[enable_optimizer="no"])
 
 if test "${enable_optimizer}" = "yes" ; then
         AC_DEFINE([OPTIMZER],[],[Enable Optimization.])
@@ -341,7 +341,7 @@ elif test "x${ax_cv_c_compiler_vendor}" = "xintel" ; then
         ;;
     esac
 else
-    AC_MSG_ERROR(Please update configure.in with SOLINK values for your compiler)
+    AC_ERROR([Please update configure.in with SOLINK values for your compiler])
 fi
 
 ##
@@ -372,7 +372,9 @@ if test "$ax_cv_c_compiler_vendor" = "gnu"; then
   AC_CACHE_CHECK([whether compiler supports -Wno-unused-result],
     [ac_cv_gcc_supports_w_no_unused_result], [
       CFLAGS="$CFLAGS -Wno-unused-result -Wno-error=unused-result"
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[return 0;]])],[ac_cv_gcc_supports_w_no_unused_result=yes],[ac_cv_gcc_supports_w_no_unused_result=no])])
+      AC_TRY_COMPILE([],[return 0;],
+        [ac_cv_gcc_supports_w_no_unused_result=yes],
+        [ac_cv_gcc_supports_w_no_unused_result=no])])
   CFLAGS="$saved_CFLAGS"
   AC_MSG_RESULT($ac_cv_gcc_supports_w_no_unused_result)
 
@@ -380,7 +382,9 @@ if test "$ax_cv_c_compiler_vendor" = "gnu"; then
   AC_CACHE_CHECK([whether compiler supports -Wno-misleading-indentation],
     [ac_cv_gcc_supports_w_no_misleading_indentation], [
       CFLAGS="$CFLAGS -Wno-misleading-indentation -Wno-error=misleading-indentation"
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[return 0;]])],[ac_cv_gcc_supports_w_no_misleading_indentation=yes],[ac_cv_gcc_supports_w_no_misleading_indentation=no])])
+      AC_TRY_COMPILE([],[return 0;],
+        [ac_cv_gcc_supports_w_no_misleading_indentation=yes],
+        [ac_cv_gcc_supports_w_no_misleading_indentation=no])])
   CFLAGS="$saved_CFLAGS"
   AC_MSG_RESULT($ac_cv_gcc_supports_w_no_misleading_indentation)
 fi
@@ -528,7 +532,7 @@ fi
 # Enable debugging (default: on)
 # (rename option if the default is changed)
 AC_ARG_ENABLE(debug,
-[AS_HELP_STRING([--disable-debug],[build without debug information])],[enable_debug="$enableval"],[enable_debug="yes"])
+[AC_HELP_STRING([--disable-debug],[build without debug information])],[enable_debug="$enableval"],[enable_debug="yes"])
 
 if test "${enable_debug}" = "yes"; then
         AC_DEFINE([DEBUG],[],[Enable extra debugging.])
@@ -549,17 +553,17 @@ if test "${enable_debug}" = "yes"; then
 fi
 
 AC_ARG_ENABLE(libyuv,
-[AS_HELP_STRING([--disable-libyuv],[build without libyuv])],[enable_libyuv="$enableval"],[enable_libyuv="yes"])
+[AC_HELP_STRING([--disable-libyuv],[build without libyuv])],[enable_libyuv="$enableval"],[enable_libyuv="yes"])
 
 AM_CONDITIONAL([ENABLE_LIBYUV],[test "${enable_libyuv}" = "yes"])
 
 AC_ARG_ENABLE(libvpx,
-[AS_HELP_STRING([--disable-libvpx],[build without libvpx])],[enable_libvpx="$enableval"],[enable_libvpx="yes"])
+[AC_HELP_STRING([--disable-libvpx],[build without libvpx])],[enable_libvpx="$enableval"],[enable_libvpx="yes"])
 
 AM_CONDITIONAL([ENABLE_LIBVPX],[test "${enable_libvpx}" = "yes"])
 
 AC_ARG_ENABLE(cpp,
-[AS_HELP_STRING([--disable-cpp],[build without cpp code])],[enable_cpp="$enableval"],[enable_cpp="yes"])
+[AC_HELP_STRING([--disable-cpp],[build without cpp code])],[enable_cpp="$enableval"],[enable_cpp="yes"])
 
 AM_CONDITIONAL([ENABLE_CPP],[test "${enable_cpp}" = "yes"])
 
@@ -589,7 +593,7 @@ if test x"${LUA_LIBS}" = x"" ; then
 fi
 
 AC_ARG_ENABLE(srtp,
-[AS_HELP_STRING([--disable-srtp],[build without srtp support])],[enable_srtp="$enableval"],[enable_srtp="yes"])
+[AC_HELP_STRING([--disable-srtp],[build without srtp support])],[enable_srtp="$enableval"],[enable_srtp="yes"])
 
 AM_CONDITIONAL([ENABLE_SRTP],[test "${enable_srtp}" = "yes"])
 
@@ -712,7 +716,7 @@ PKG_CHECK_MODULES([SPANDSP], [spandsp >= 3.0],[
     AC_MSG_ERROR([no usable spandsp; please install spandsp3 devel package or equivalent])
 ])
 
-PKG_CHECK_MODULES([SOFIA_SIP], [sofia-sip-ua >= 1.13.15],[
+PKG_CHECK_MODULES([SOFIA_SIP], [sofia-sip-ua >= 1.13.17],[
   AM_CONDITIONAL([HAVE_SOFIA_SIP],[true])],[
     AC_MSG_ERROR([no usable sofia-sip; please install sofia-sip-ua devel package or equivalent])
 ])
@@ -867,11 +871,7 @@ AC_SUBST(LIBTOOL_LIB_EXTEN)
 
 # Checks for header files.
 AC_HEADER_DIRENT
-m4_warn([obsolete],
-[The preprocessor macro `STDC_HEADERS' is obsolete.
-  Except in unusual embedded environments, you can safely include all
-  ISO C90 headers unconditionally.])dnl
-
+AC_HEADER_STDC
 AC_CHECK_HEADERS([sys/types.h sys/resource.h sched.h wchar.h sys/filio.h sys/ioctl.h sys/prctl.h sys/select.h netdb.h sys/time.h])
 
 # Solaris 11 privilege management
@@ -916,38 +916,13 @@ AC_SUBST(HAVE_SYS_SELECT_H_DEFINE)
 AC_C_CONST
 AC_C_INLINE
 AC_TYPE_SIZE_T
-m4_warn([obsolete],
-[Update your code to rely only on HAVE_SYS_TIME_H,
-then remove this warning and the obsolete code below it.
-All current systems provide time.h; it need not be checked for.
-Not all systems provide sys/time.h, but those that do, all allow
-you to include it and time.h simultaneously.])dnl
-AC_CHECK_HEADERS_ONCE([sys/time.h])
-# Obsolete code to be removed.
-if test $ac_cv_header_sys_time_h = yes; then
-  AC_DEFINE([TIME_WITH_SYS_TIME],[1],[Define to 1 if you can safely include both <sys/time.h>
-	     and <time.h>.  This macro is obsolete.])
-fi
-# End of obsolete code.
-
+AC_HEADER_TIME
 AC_STRUCT_TM
 
 # Checks for library functions.
 AC_PROG_GCC_TRADITIONAL
 AC_FUNC_MALLOC
-m4_warn([obsolete],
-[your code may safely assume C89 semantics that RETSIGTYPE is void.
-Remove this warning and the `AC_CACHE_CHECK' when you adjust the code.])dnl
-AC_CACHE_CHECK([return type of signal handlers],[ac_cv_type_signal],[AC_COMPILE_IFELSE(
-[AC_LANG_PROGRAM([#include <sys/types.h>
-#include <signal.h>
-],
-		 [return *(signal (0, 0)) (0) == 1;])],
-		   [ac_cv_type_signal=int],
-		   [ac_cv_type_signal=void])])
-AC_DEFINE_UNQUOTED([RETSIGTYPE],[$ac_cv_type_signal],[Define as the return type of signal handlers
-		    (`int' or `void').])
-
+AC_TYPE_SIGNAL
 AC_FUNC_STRFTIME
 AC_CHECK_FUNCS([gethostname vasprintf mmap mlock mlockall usleep getifaddrs timerfd_create getdtablesize posix_openpt poll])
 AC_CHECK_FUNCS([sched_setscheduler setpriority setrlimit setgroups initgroups getrusage])
@@ -1052,9 +1027,10 @@ AC_SUBST(DIRECTORY_SEPARATOR)
 
 va_list_is_array=no
 AC_MSG_CHECKING(whether va_list is an array)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+AC_TRY_COMPILE([
 #include <stdarg.h>
-]], [[va_list list1, list2; list1 = list2;]])],[],[va_list_is_array=yes])
+], [va_list list1, list2; list1 = list2;], , 
+va_list_is_array=yes)
 AC_MSG_RESULT($va_list_is_array)
 if test x"$va_list_is_array" = xyes; then
   VA_LIST_IS_ARRAY_DEFINE=1
@@ -1065,7 +1041,9 @@ AC_SUBST(VA_LIST_IS_ARRAY_DEFINE)
 
 
 AC_MSG_CHECKING(whether compiler has __attribute__)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[int x __attribute__((__unused__));]])],[compiler_has_attribute=yes],[compiler_has_attribute=no])
+AC_TRY_COMPILE(, [int x __attribute__((__unused__));],
+compiler_has_attribute=yes,
+compiler_has_attribute=no)
 AC_MSG_RESULT($compiler_has_attribute)
 if test x"$compiler_has_attribute" = xyes; then
     ATTR_UNUSED="__attribute__((__unused__))"
@@ -1078,7 +1056,7 @@ AC_SUBST(ATTR_UNUSED)
 saved_CFLAGS="$CFLAGS"
 AC_CACHE_CHECK([whether compiler supports -Wdeclaration-after-statement], [ac_cv_gcc_declaration_after_statement], [
 CFLAGS="$CFLAGS -Wdeclaration-after-statement"
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[return 0;]])],[ac_cv_gcc_declaration_after_statement=yes],[ac_cv_gcc_declaration_after_statement=no])
+AC_TRY_COMPILE([],[return 0;],[ac_cv_gcc_declaration_after_statement=yes],[ac_cv_gcc_declaration_after_statement=no])
 ])
 AC_MSG_RESULT($ac_cv_gcc_declaration_after_statement)
 if test x"$ac_cv_gcc_declaration_after_statement" = xyes; then
@@ -1091,7 +1069,7 @@ if test "x${ax_cv_c_compiler_vendor}" = "xclang" ; then
      # Next check added for Xcode 5 and systems with clang 5 llvm 3.3 or above, extended offset must be off
      AC_CACHE_CHECK([whether compiler supports -Wextended-offsetof], [ac_cv_clang_extended_offsetof], [
        CFLAGS="$CFLAGS -Wno-extended-offsetof"
-       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[return 0;]])],[ac_cv_clang_extended_offsetof=yes],[ac_cv_clang_extended_offsetof=no])
+       AC_TRY_COMPILE([],[return 0;],[ac_cv_clang_extended_offsetof=yes],[ac_cv_clang_extended_offsetof=no])
      ])
      AC_MSG_RESULT($ac_cv_clang_extended_offsetof)
      if test x"$ac_cv_clang_extended_offsetof" = xyes; then
@@ -1107,7 +1085,7 @@ fi
 #saved_CFLAGS="$CFLAGS"
 #AC_CACHE_CHECK([whether compiler supports -Wunused-but-set-variable], [ac_cv_gcc_unused_but_set_variable], [
 #CFLAGS="$CFLAGS -Wunused-but-set-variable"
-#AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[return 0;]])],[ac_cv_gcc_unused_but_set_variable=yes],[ac_cv_gcc_unused_but_set_variable=no])
+#AC_TRY_COMPILE([],[return 0;],[ac_cv_gcc_unused_but_set_variable=yes],[ac_cv_gcc_unused_but_set_variable=no])
 #])
 #AC_MSG_RESULT($ac_cv_gcc_unused_but_set_variable)
 #if test x"$ac_cv_gcc_unused_but_set_variable" = xyes; then
@@ -1132,7 +1110,7 @@ AC_CHECK_SIZEOF(void*, 4)
 if test "x$ac_cv_sizeof_voidp" != "x"; then
     voidp_size=$ac_cv_sizeof_voidp
 else
-    AC_MSG_ERROR(Cannot determine size of void*)
+    AC_ERROR([Cannot determine size of void*])
 fi
 
 if test "$ac_cv_sizeof_short" = "2"; then
@@ -1177,7 +1155,7 @@ elif test "$ac_cv_sizeof_longlong" = "8"; then
     int64_value="__int64"
     long_value="__int64"
 else
-    AC_MSG_ERROR(could not detect a 64-bit integer type)
+    AC_ERROR([could not detect a 64-bit integer type])
 fi
 
 if test "$ac_cv_type_size_t" = "yes"; then
@@ -1633,7 +1611,6 @@ AS_IF([test "x$enable_systemd" = "xyes"],[
 
 AC_SUBST(SYSTEMD_LIBS)
 
-
 dnl DH: Added for including libwebsockets
 AC_ARG_WITH(lws,
   [AS_HELP_STRING([--with-lws],
@@ -1662,20 +1639,6 @@ else
      AM_CONDITIONAL([HAVE_GRPC],[false])
 fi
 
-dnl: DH: added AWS SDK libs
-AC_ARG_WITH(aws,
-   [AS_HELP_STRING([--with-aws],
-     [enable support for aws-cpp-sdk])],
-   [with_aws="$withval"],
-   [with_aws="no"])
-if test "$with_aws" = "yes"; then
-  PKG_CHECK_MODULES([AWS_SDK], [aws-cpp-sdk-core aws-cpp-sdk-transcribestreaming aws-cpp-sdk-lexv2-runtime], [
-      AM_CONDITIONAL([HAVE_AWS_SDK],[true])], [
-      AC_MSG_RESULT([no]); AM_CONDITIONAL([HAVE_AWS_SDK],[false])])
-  # AC_SUBST([AM_MOD_AWS_CXXFLAGS], [-DFREESWITCH_AWS_GLOBAL_INITIALIZATION=1]) 
-else
-     AM_CONDITIONAL([HAVE_AWS_SDK],[false])
-fi
 
 dnl ---------------------------------------------------------------------------
 dnl - OpenLDAP SDK
@@ -2080,7 +2043,7 @@ CHECK_ERLANG
 
 #  Enable clang address sanitizer bit build
 AC_ARG_ENABLE(address_sanitizer,
-  [AS_HELP_STRING([--enable-address-sanitizer],[build with address sanitizer])],
+  [AC_HELP_STRING([--enable-address-sanitizer],[build with address sanitizer])],
   [enable_address_sanitizer="$enable_address_sanitizer"],
   [enable_address_sanitizer="no"])
 
@@ -2092,13 +2055,13 @@ fi
 
 #  Enable HEAP profiler (requires libgoogle-perftools-dev package)
 AC_ARG_ENABLE(heap_profiler,
-  [AS_HELP_STRING([--enable-heap-profiler],[build with google heap profiler])],
+  [AC_HELP_STRING([--enable-heap-profiler],[build with google heap profiler])],
   [enable_heap_profiler="$enable_heap_profiler"],
   [enable_heap_profiler="no"])
 
 #  Enable CPU profiler (requires libgoogle-perftools-dev package)
 AC_ARG_ENABLE(cpu_profiler,
-  [AS_HELP_STRING([--enable-cpu-profiler],[build with google cpu profiler])],
+  [AC_HELP_STRING([--enable-cpu-profiler],[build with google cpu profiler])],
   [enable_cpu_profiler="$enable_cpu_profiler"],
   [enable_cpu_profiler="no"])
 
@@ -2131,7 +2094,7 @@ fi
 
 #  Enable fake dlclose
 AC_ARG_ENABLE(fake_dlclose,
-  [AS_HELP_STRING([--enable-fake-dlclose],[Do not unload dynamic libraries])],
+  [AC_HELP_STRING([--enable-fake-dlclose],[Do not unload dynamic libraries])],
   [enable_fake_dlclose="$enable_fake_dlclose"],
   [enable_fake_dlclose="no"])
 
@@ -2140,7 +2103,7 @@ if test "${enable_fake_dlclose}" = "yes"; then
 fi
 
 AC_ARG_ENABLE(,
-  [AS_HELP_STRING([--enable-pool-sanitizer],[build with sanitizer friendly pool behavior])],
+  [AC_HELP_STRING([--enable-pool-sanitizer],[build with sanitizer friendly pool behavior])],
   [enable_pool_sanitizer="$enable_pool_sanitizer"],
   [enable_pool_sanitizer="no"])
 
@@ -2157,33 +2120,183 @@ AC_CONFIG_FILES([Makefile
 		tests/unit/Makefile
 		src/Makefile
 		src/mod/Makefile
-    src/mod/applications/mod_audio_fork/Makefile
-    src/mod/applications/mod_google_transcribe/Makefile
+		src/mod/applications/mod_abstraction/Makefile
 		src/mod/applications/mod_avmd/Makefile
+		src/mod/applications/mod_bert/Makefile
+		src/mod/applications/mod_blacklist/Makefile
+		src/mod/applications/mod_callcenter/Makefile
+		src/mod/applications/mod_cidlookup/Makefile
+		src/mod/applications/mod_cluechoo/Makefile
 		src/mod/applications/mod_commands/Makefile
 		src/mod/applications/mod_conference/Makefile
+		src/mod/applications/mod_curl/Makefile
+		src/mod/applications/mod_cv/Makefile
+		src/mod/applications/mod_db/Makefile
+		src/mod/applications/mod_directory/Makefile
+		src/mod/applications/mod_distributor/Makefile
 		src/mod/applications/mod_dptools/Makefile
+		src/mod/applications/mod_easyroute/Makefile
+		src/mod/applications/mod_enum/Makefile
+		src/mod/applications/mod_esf/Makefile
+		src/mod/applications/mod_esl/Makefile
+		src/mod/applications/mod_expr/Makefile
+		src/mod/applications/mod_fifo/Makefile
+		src/mod/applications/mod_fsk/Makefile
+		src/mod/applications/mod_fsv/Makefile
+		src/mod/applications/mod_hash/Makefile
+		src/mod/applications/mod_hiredis/Makefile
 		src/mod/applications/mod_httapi/Makefile
+		src/mod/applications/mod_http_cache/Makefile
+		src/mod/applications/mod_ladspa/Makefile
+		src/mod/applications/mod_lcr/Makefile
+		src/mod/applications/mod_limit/Makefile
+		src/mod/applications/mod_memcache/Makefile
+		src/mod/applications/mod_mongo/Makefile
+		src/mod/applications/mod_mp4/Makefile
+		src/mod/applications/mod_mp4v2/Makefile
+		src/mod/applications/mod_nibblebill/Makefile
+		src/mod/applications/mod_oreka/Makefile
+		src/mod/applications/mod_osp/Makefile
+		src/mod/applications/mod_prefix/Makefile
+		src/mod/applications/mod_rad_auth/Makefile
+		src/mod/applications/mod_random/Makefile
+		src/mod/applications/mod_redis/Makefile
+		src/mod/applications/mod_rss/Makefile
+		src/mod/applications/mod_skel/Makefile
+		src/mod/applications/mod_signalwire/Makefile
+		src/mod/applications/mod_sms/Makefile
+		src/mod/applications/mod_sms_flowroute/Makefile
+		src/mod/applications/mod_snapshot/Makefile
+		src/mod/applications/mod_snom/Makefile
+		src/mod/applications/mod_sonar/Makefile
+		src/mod/applications/mod_soundtouch/Makefile
 		src/mod/applications/mod_spandsp/Makefile
+		src/mod/applications/mod_spy/Makefile
+		src/mod/applications/mod_stress/Makefile
+		src/mod/applications/mod_test/Makefile
+		src/mod/applications/mod_translate/Makefile
+		src/mod/applications/mod_valet_parking/Makefile
+		src/mod/applications/mod_vmd/Makefile
+		src/mod/applications/mod_voicemail/Makefile
+		src/mod/applications/mod_voicemail_ivr/Makefile
+		src/mod/asr_tts/mod_cepstral/Makefile
+		src/mod/asr_tts/mod_flite/Makefile
+		src/mod/asr_tts/mod_pocketsphinx/Makefile
+		src/mod/asr_tts/mod_tts_commandline/Makefile
 		src/mod/codecs/mod_amr/Makefile
+		src/mod/codecs/mod_amrwb/Makefile
+		src/mod/codecs/mod_b64/Makefile
+		src/mod/codecs/mod_bv/Makefile
+		src/mod/codecs/mod_clearmode/Makefile
+		src/mod/codecs/mod_codec2/Makefile
+		src/mod/codecs/mod_com_g729/Makefile
+		src/mod/codecs/mod_dahdi_codec/Makefile
 		src/mod/codecs/mod_g723_1/Makefile
+		src/mod/codecs/mod_g729/Makefile
 		src/mod/codecs/mod_h26x/Makefile
+		src/mod/codecs/mod_ilbc/Makefile
+		src/mod/codecs/mod_isac/Makefile
+		src/mod/codecs/mod_mp4v/Makefile
 		src/mod/codecs/mod_opus/Makefile
+		src/mod/codecs/mod_openh264/Makefile
+		src/mod/codecs/mod_sangoma_codec/Makefile
+		src/mod/codecs/mod_silk/Makefile
+		src/mod/codecs/mod_siren/Makefile
+		src/mod/codecs/mod_skel_codec/Makefile
+		src/mod/codecs/mod_theora/Makefile
+		src/mod/databases/mod_mariadb/Makefile
+		src/mod/databases/mod_pgsql/Makefile
+		src/mod/dialplans/mod_dialplan_asterisk/Makefile
+		src/mod/dialplans/mod_dialplan_directory/Makefile
 		src/mod/dialplans/mod_dialplan_xml/Makefile
+		src/mod/directories/mod_ldap/Makefile
+		src/mod/endpoints/mod_alsa/Makefile
+		src/mod/endpoints/mod_gsmopen/Makefile
+		src/mod/endpoints/mod_h323/Makefile
+		src/mod/endpoints/mod_khomp/Makefile
+		src/mod/endpoints/mod_loopback/Makefile
+		src/mod/endpoints/mod_opal/Makefile
+		src/mod/endpoints/mod_portaudio/Makefile
+		src/mod/endpoints/mod_reference/Makefile
+		src/mod/endpoints/mod_rtmp/Makefile
+		src/mod/endpoints/mod_skinny/Makefile
 		src/mod/endpoints/mod_sofia/Makefile
+		src/mod/endpoints/mod_unicall/Makefile
 		src/mod/endpoints/mod_rtc/Makefile
+		src/mod/endpoints/mod_verto/Makefile
+		src/mod/event_handlers/mod_amqp/Makefile
 		src/mod/event_handlers/mod_cdr_csv/Makefile
+		src/mod/event_handlers/mod_cdr_mongodb/Makefile
+		src/mod/event_handlers/mod_cdr_pg_csv/Makefile
+		src/mod/event_handlers/mod_cdr_sqlite/Makefile
+		src/mod/event_handlers/mod_erlang_event/Makefile
+		src/mod/event_handlers/mod_event_multicast/Makefile
 		src/mod/event_handlers/mod_event_socket/Makefile
+		src/mod/event_handlers/mod_event_test/Makefile
+		src/mod/event_handlers/mod_fail2ban/Makefile
+		src/mod/event_handlers/mod_format_cdr/Makefile
+		src/mod/event_handlers/mod_json_cdr/Makefile
+		src/mod/event_handlers/mod_kazoo/Makefile
+		src/mod/event_handlers/mod_radius_cdr/Makefile
+		src/mod/event_handlers/mod_odbc_cdr/Makefile
+		src/mod/event_handlers/mod_rayo/Makefile
+		src/mod/event_handlers/mod_smpp/Makefile
+		src/mod/event_handlers/mod_snmp/Makefile
+		src/mod/event_handlers/mod_event_zmq/Makefile
+		src/mod/formats/mod_imagick/Makefile
 		src/mod/formats/mod_local_stream/Makefile
 		src/mod/formats/mod_native_file/Makefile
+		src/mod/formats/mod_opusfile/Makefile
+		src/mod/formats/mod_png/Makefile
+		src/mod/formats/mod_shell_stream/Makefile
 		src/mod/formats/mod_shout/Makefile
 		src/mod/formats/mod_sndfile/Makefile
+		src/mod/formats/mod_ssml/Makefile
 		src/mod/formats/mod_tone_stream/Makefile
+		src/mod/formats/mod_vlc/Makefile
+		src/mod/formats/mod_portaudio_stream/Makefile
+		src/mod/languages/mod_java/Makefile
+		src/mod/languages/mod_lua/Makefile
+		src/mod/languages/mod_managed/Makefile
+		src/mod/languages/mod_perl/Makefile
+		src/mod/languages/mod_python/Makefile
+		src/mod/languages/mod_python3/Makefile
+		src/mod/languages/mod_v8/Makefile
+		src/mod/languages/mod_yaml/Makefile
+		src/mod/languages/mod_basic/Makefile
 		src/mod/loggers/mod_console/Makefile
+		src/mod/loggers/mod_graylog2/Makefile
 		src/mod/loggers/mod_logfile/Makefile
 		src/mod/loggers/mod_syslog/Makefile
+		src/mod/loggers/mod_raven/Makefile
+		src/mod/say/mod_say_de/Makefile
 		src/mod/say/mod_say_en/Makefile
+		src/mod/say/mod_say_es/Makefile
+		src/mod/say/mod_say_es_ar/Makefile
+		src/mod/say/mod_say_fa/Makefile
+		src/mod/say/mod_say_fr/Makefile
+		src/mod/say/mod_say_he/Makefile
+		src/mod/say/mod_say_hr/Makefile
+		src/mod/say/mod_say_hu/Makefile
+		src/mod/say/mod_say_it/Makefile
+		src/mod/say/mod_say_ja/Makefile
+		src/mod/say/mod_say_nl/Makefile
+		src/mod/say/mod_say_pl/Makefile
+		src/mod/say/mod_say_pt/Makefile
+		src/mod/say/mod_say_ru/Makefile
+		src/mod/say/mod_say_sv/Makefile
+		src/mod/say/mod_say_th/Makefile
+		src/mod/say/mod_say_zh/Makefile
+		src/mod/timers/mod_posix_timer/Makefile
+		src/mod/timers/mod_timerfd/Makefile
 		src/mod/xml_int/mod_xml_cdr/Makefile
+		src/mod/xml_int/mod_xml_curl/Makefile
+		src/mod/xml_int/mod_xml_ldap/Makefile
+		src/mod/xml_int/mod_xml_radius/Makefile
+		src/mod/xml_int/mod_xml_rpc/Makefile
+		src/mod/xml_int/mod_xml_scgi/Makefile
+		src/mod/applications/mod_av/Makefile
+		src/mod/applications/mod_video_filter/Makefile
 		src/include/switch_am_config.h
 		build/getsounds.sh
 		build/getlib.sh
@@ -2191,9 +2304,9 @@ AC_CONFIG_FILES([Makefile
 		build/freeswitch.pc
 		build/standalone_module/freeswitch.pc
 		build/modmake.rules
-    libs/esl/Makefile
-    libs/esl/perl/Makefile
-    libs/esl/php/Makefile
+                libs/esl/Makefile
+                libs/esl/perl/Makefile
+                libs/esl/php/Makefile
 		libs/xmlrpc-c/include/xmlrpc-c/config.h
 		libs/xmlrpc-c/xmlrpc_config.h
 		libs/xmlrpc-c/config.mk
